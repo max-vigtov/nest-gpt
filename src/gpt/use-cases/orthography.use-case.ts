@@ -25,7 +25,7 @@ export const orthographyCheckUseCase = async ( openai: OpenAI, options: Options 
 					Ejemplo de salida:
 					{
 					userScore: number,
-					errors: string, // ['error →> solución']
+					errors: string[], // ['error →> solución'] Debe ser un array
 					message: string, // Usa emojis y texto para felicitar al usuario
 					}
 				`
@@ -45,9 +45,4 @@ export const orthographyCheckUseCase = async ( openai: OpenAI, options: Options 
 	
 	const jsonResp = JSON.parse( completion.choices[0].message.content );
 	return jsonResp;
-
-	return {
-		propmt: propmt,
-		apikey: process.env.OPENAI_API_KEY
-	}
 }
