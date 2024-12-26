@@ -1,12 +1,12 @@
 import OpenAI from "openai";
 
 interface Options {
-	propmt: string;
+	prompt: string;
 }
 
 export const orthographyCheckUseCase = async ( openai: OpenAI, options: Options ) => {
 
-	const { propmt } = options;
+	const { prompt } = options;
 
 	const completion = await openai.chat.completions.create({
 		model: "gpt-4o-mini",
@@ -32,7 +32,7 @@ export const orthographyCheckUseCase = async ( openai: OpenAI, options: Options 
 			},
 			{
 				role: "user",
-				content: propmt,
+				content: prompt,
 			},
 		],
 		temperature:0.3,
