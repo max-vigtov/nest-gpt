@@ -16,13 +16,10 @@ export const translateUseCase = async (openai: OpenAI, { prompt, lang }: Options
 					Traduce el siguiente texto al idioma ${lang}:${ prompt }
 				`
 			},
-
 		],
 		temperature: 0.3,
 
-
 	});
 	
-	//const jsonResp = JSON.parse( completion.choices[0].message.content );
 	return { message: response.choices[0].message.content };
 }
