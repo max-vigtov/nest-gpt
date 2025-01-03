@@ -2,7 +2,7 @@ import OpenAI from "openai";
 
 interface Options {
 	prompt: string;
-  }
+}
 
 export const prosConsDicusserStreamUseCase = async (openai: OpenAI, { prompt }: Options) => {
 	return await openai.chat.completions.create({
