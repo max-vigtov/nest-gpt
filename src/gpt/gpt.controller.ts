@@ -79,34 +79,26 @@ export class GptController {
         filename: (req, file, callback) => {
           const fileExtension = file.originalname.split('.').pop();
           const fileName = `${new Date().getTime()}.${fileExtension}`;
-          callback(null, fileName);
+          return callback(null, fileName);
         },
       }),
-      fileFilter: (req, file, callback) => {
-        // Valida si el archivo es un audio antes de guardar
-        if (!file.mimetype.startsWith('audio/')) {
-          return callback(
-            new BadRequestException('El archivo no es un audio válido'),
-            false,
-          );
-        }
-        callback(null, true);
-      },
     }),
   )
-  async audioToText(    
+  async audioToText(
     @UploadedFile(
       new ParseFilePipe({
         validators: [
-          new MaxFileSizeValidator({ maxSize: 1000 * 1024 * 5, message: 'File us bigger than 5 mb'}),
-          new FileTypeValidator({ fileType: 'audio/*' })
-        ]
-      })
-    ) file: Express.Multer.File,
-    @Body('prompt') audioToTextDto: AudioToTextDto,
+          new MaxFileSizeValidator({
+            maxSize: 1000 * 1024 * 5,
+            message: 'File is bigger than 5 mb ',
+          }),
+          new FileTypeValidator({ fileType: 'audio/*' }),
+        ],
+      }),
+    )
+    file: Express.Multer.File,
+    @Body() audioToTextDto: AudioToTextDto,
   ) {
-    console.log({ audioToTextDto });
-    
-      return this.gptService.audioToText(file, audioToTextDto);
+    return this.gptService.audioToText(file, audioToTextDto);
   }
 }
