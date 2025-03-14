@@ -1,6 +1,6 @@
 import OpenAI from "openai"
 import * as fs from "fs";
-import { downloadImagesAsPng } from '../../helpers/download-images-as-png';
+import { downloadImageAsPng } from '../../helpers/download-images-as-png';
 
 interface Options {
 	baseImage: string
@@ -8,7 +8,7 @@ interface Options {
 
 export const imageVariationUseCase = async ( openai: OpenAI, { baseImage }: Options ) => {
 
-	const pngImagePath = await downloadImagesAsPng( baseImage, true );
+	const pngImagePath = await downloadImageAsPng( baseImage, true );
 
 	console.log( pngImagePath );
 	
@@ -20,13 +20,13 @@ export const imageVariationUseCase = async ( openai: OpenAI, { baseImage }: Opti
 		response_format: 'url'
 	})
 
-	const fileName = await downloadImagesAsPng( response.data[0].url );
+	const fileName = await downloadImageAsPng( response.data[0].url );
 	const url = `${ process.env.SERVER_URL }/gpt/image-generation/${ fileName }`
+  
 
-	const newImage = downloadImagesAsPng( response.data[0].url );
 	return {
-		url: url,
-		openAIUrl: response.data[0].url,
-		revised_prompt: response.data[0].revised_prompt
+	  url: url, 
+	  openAIUrl: response.data[0].url,
+	  revised_prompt: response.data[0].revised_prompt,
 	}
-}
+  };

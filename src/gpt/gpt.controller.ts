@@ -104,9 +104,9 @@ export class GptController {
 
   @Post('image-generation')
   async imageGeneration(
-    @Body() imageGenerationDto: ImageGenerationDto,
-  ){
-    return this.gptService.imageGeneration(imageGenerationDto);
+    @Body() imageGenerationDto: ImageGenerationDto
+  ) {
+    return await this.gptService.imageGeneration(imageGenerationDto);
   }
 
   @Get('image-generation/:fileId')
